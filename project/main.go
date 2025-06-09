@@ -12,8 +12,10 @@ func main() {
 		port = "8080"
 	}
 
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello world")
+		
+		http.FileServer(http.Dir("./frontend/build")).ServeHTTP(w, r)
 	})
 
 	fmt.Printf("Server started in port %s\n", port)
