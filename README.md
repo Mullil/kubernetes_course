@@ -13,3 +13,6 @@
 
 - [1.4](https://github.com/Mullil/kubernetes_course/tree/1.4/project)
 
+- [1.5](https://github.com/Mullil/kubernetes_course/tree/1.5/project)
+
+
