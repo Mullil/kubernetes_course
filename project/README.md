@@ -1,5 +1,5 @@
 Deploy with 
 
 ```Bash
-kubectl create deployment project --image=mullil/project
+kubectl apply -f manifests/deployment.yaml
 ```
