@@ -15,6 +15,8 @@ COPY --from=frontend-builder /app/frontend/build ./frontend/build
 
 RUN go build -o server
 
-ENV PORT=8080
+EXPOSE 3000
+
+ENV PORT=3000
 
 CMD ["./server"]

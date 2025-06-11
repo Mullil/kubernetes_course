@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:1.5
+          image: mullil/project:1.6
