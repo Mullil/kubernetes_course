@@ -19,3 +19,5 @@
 
 - [1.7](https://github.com/Mullil/kubernetes_course/tree/1.7/log_output)
 
+- [1.8](https://github.com/Mullil/kubernetes_course/tree/1.8/project)
+
