@@ -4,6 +4,10 @@ WORKDIR /app
 
 COPY log_output.py .
 
+RUN pip install fastapi uvicorn
+
+EXPOSE 3000
+
 CMD ["python", "log_output.py"]
 
 
