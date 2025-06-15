@@ -1,0 +1,9 @@
+FROM python:3.13-slim
+
+WORKDIR /app
+
+COPY writer.py .
+
+COPY files/logs.txt .
+
+CMD ["python", "writer.py"]
