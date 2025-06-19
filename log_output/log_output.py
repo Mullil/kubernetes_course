@@ -10,7 +10,13 @@ app = FastAPI()
 def index():
     with open ("./files/logs.txt", "r") as file:
         logs = file.read()
-    return PlainTextResponse(content=logs)
+    try:
+        with open ("./files/pong.txt", "r") as file:
+            pongs = file.read()
+    except:
+        pongs = 0
+    data = logs + "\n" + pongs
+    return PlainTextResponse(content=data)
 
 if __name__=="__main__":
     uvicorn.run(app, host="0.0.0.0", port=3000)

@@ -12,6 +12,13 @@ spec:
       labels:
         app: ping-pong-app
     spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: log-claim
       containers:
         - name: ping-pong-app
-          image: mullil/ping-pong-app:1.9
+          image: mullil/ping-pong-app:1.11
+          volumeMounts:
+            - name: shared-image
+              mountPath: /app/files

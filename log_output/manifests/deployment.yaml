@@ -14,15 +14,16 @@ spec:
     spec:
       volumes:
         - name: shared-image
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: log-claim
       containers:
         - name: log-output-writer
-          image: mullil/log-output-writer:1.10
+          image: mullil/log-output-writer:1.11
           volumeMounts:
           - name: shared-image
             mountPath: /app/files
         - name: log-output
-          image: mullil/log_output:1.10
+          image: mullil/log_output:1.11
           volumeMounts:
             - name: shared-image
               mountPath: /app/files
