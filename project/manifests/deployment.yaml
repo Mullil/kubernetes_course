@@ -14,10 +14,12 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:1.12
+          image: mullil/project:1.13
           volumeMounts:
             - name: image-cache
               mountPath: /app/files
+          imagePullPolicy: Always
+
       volumes:
         - name: image-cache
           persistentVolumeClaim:
