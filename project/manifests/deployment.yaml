@@ -14,4 +14,11 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:1.6
+          image: mullil/project:1.12
+          volumeMounts:
+            - name: image-cache
+              mountPath: /app/files
+      volumes:
+        - name: image-cache
+          persistentVolumeClaim:
+            claimName: log-claim
