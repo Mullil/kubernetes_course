@@ -12,18 +12,7 @@ spec:
       labels:
         app: log-output
     spec:
-      volumes:
-        - name: shared-image
-          persistentVolumeClaim:
-            claimName: log-claim
       containers:
-        - name: log-output-writer
-          image: mullil/log-output-writer:1.11
-          volumeMounts:
-          - name: shared-image
-            mountPath: /app/files
         - name: log-output
-          image: mullil/log_output:1.11
-          volumeMounts:
-            - name: shared-image
-              mountPath: /app/files
+          image: mullil/log_output:2.1
+          imagePullPolicy: Always

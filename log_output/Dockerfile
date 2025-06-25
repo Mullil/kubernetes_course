@@ -6,7 +6,7 @@ COPY log_output.py .
 
 COPY files/logs.txt .
 
-RUN pip install fastapi uvicorn
+RUN pip install fastapi uvicorn requests
 
 EXPOSE 3000
 
