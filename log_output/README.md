@@ -6,6 +6,10 @@ k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
 Deploy with 
 
 ```Bash
+kubectl apply -f ../ping-pong-app/manifests/
+```
+
+```Bash
 kubectl apply -f manifests/
 ```
 
