@@ -28,3 +28,5 @@
 - [1.11](https://github.com/Mullil/kubernetes_course/tree/1.11/ping-pong-app)
 
 - [1.12](https://github.com/Mullil/kubernetes_course/tree/1.12/project)
+
+- [1.13](https://github.com/Mullil/kubernetes_course/tree/1.13/project)
