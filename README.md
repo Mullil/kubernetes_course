@@ -34,3 +34,5 @@
 ### Chapter 3
 
 - [2.1](https://github.com/Mullil/kubernetes_course/tree/2.1/log_output)
+
+- [2.2](https://github.com/Mullil/kubernetes_course/tree/2.2/project)
