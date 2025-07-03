@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+const baseUrl = '/todos'
 
 function App() {
-  const [todos, setTodo] = useState([
-    "Learn Javascript",
-    "Learn React",
-    "Build a project"
-  ])
+  const [todos, setTodo] = useState([])
 
+  useEffect(() => {
+    const getTodos = async () => {
+      const response = await axios.get(baseUrl)
+      setTodo(response.data)
+    }
+    getTodos()
+  }, [])
 
   const todoList = () => {
-    return (
+    return !todos ? null : (
       <ul>
-      {todos.map((todo, idx) =>
-        <li key={idx}>{todo}</li>
+      {todos.map((todo) =>
+        <li key={todo.id}>{todo.content}</li>
       )}
       </ul>
     )
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const todo = event.target.todo.value
     event.target.todo.value = ''
-    if (todo.length <= 140) setTodo(todos.concat(todo))
+    if (todo.length <= 140) {
+      const response = await axios.post(baseUrl, { content: todo })
+      setTodo(todos.concat(response.data))
+    }
   }
 
   return (

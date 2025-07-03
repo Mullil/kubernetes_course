@@ -14,13 +14,31 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:1.13
+          image: mullil/project:2.2
           volumeMounts:
             - name: image-cache
               mountPath: /app/files
           imagePullPolicy: Always
-
       volumes:
         - name: image-cache
           persistentVolumeClaim:
             claimName: log-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+    spec:
+      containers:
+        - name: todo-backend
+          image: mullil/todo-backend:2.2
+          imagePullPolicy: Always

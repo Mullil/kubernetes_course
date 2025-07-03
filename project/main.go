@@ -71,7 +71,6 @@ func main() {
 	})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-
 		http.FileServer(http.Dir("./frontend/build")).ServeHTTP(w, r)
 	})
 
