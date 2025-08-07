@@ -17,7 +17,7 @@ docker exec k3d-k3s-default-agent-0 mkdir -p /tmp/kube
 Apply volumes with
 
 ```Bash
-kubectl apply -f ../volumes
+kubectl apply -f ../exercise-volumes/
 ```
 
 Deploy the ping-pong-app with 
