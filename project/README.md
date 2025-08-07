@@ -16,10 +16,16 @@ Then run
 docker exec k3d-k3s-default-agent-0 mkdir -p /tmp/kube
 ```
 
+Create the project namespace with
+
+```Bash
+kubectl create namespace project
+```
+
 Apply volumes with
 
 ```Bash
-kubectl apply -f ../volumes
+kubectl apply -f ../project-volumes/
 ```
 
 Deploy with 
