@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: project
+  namespace: project
 spec:
   replicas: 1
   selector:
@@ -14,7 +15,7 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:2.2
+          image: mullil/project:2.3
           volumeMounts:
             - name: image-cache
               mountPath: /app/files
@@ -22,12 +23,13 @@ spec:
       volumes:
         - name: image-cache
           persistentVolumeClaim:
-            claimName: log-claim
+            claimName: project-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: todo-backend
+  namespace: project
 spec:
   replicas: 1
   selector:

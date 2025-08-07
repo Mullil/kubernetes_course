@@ -3,12 +3,12 @@ import axios from 'axios'
 const baseUrl = '/todos'
 
 function App() {
-  const [todos, setTodo] = useState([])
+  const [todos, setTodos] = useState([])
 
   useEffect(() => {
     const getTodos = async () => {
       const response = await axios.get(baseUrl)
-      setTodo(response.data)
+      setTodos(response.data)
     }
     getTodos()
   }, [])
@@ -29,7 +29,7 @@ function App() {
     event.target.todo.value = ''
     if (todo.length <= 140) {
       const response = await axios.post(baseUrl, { content: todo })
-      setTodo(todos.concat(response.data))
+      setTodos(todos.concat(response.data))
     }
   }
 
