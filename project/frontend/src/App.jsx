@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     const getTodos = async () => {
       const response = await axios.get(baseUrl)
-      setTodos(response.data)
+      setTodos(Array.isArray(response.data) ? response.data : [])
     }
     getTodos()
   }, [])
