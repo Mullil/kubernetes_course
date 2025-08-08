@@ -15,11 +15,14 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:2.3
+          image: mullil/project:2.6
           volumeMounts:
             - name: image-cache
               mountPath: /app/files
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: project-configmap
       volumes:
         - name: image-cache
           persistentVolumeClaim:
@@ -42,5 +45,8 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: mullil/todo-backend:2.2
+          image: mullil/todo-backend:2.6
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: project-configmap

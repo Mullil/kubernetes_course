@@ -42,10 +42,7 @@ func createTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	port := os.Getenv("TODO_BACKEND_PORT")
 	fmt.Printf("Starting todo-backend on port %s\n", port)
 	http.HandleFunc("/todos", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {

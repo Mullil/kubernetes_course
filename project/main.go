@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-const (
-	imagePath = "/app/files/image.jpg"
-	timePath  = "/app/files/image.time"
+var (
+	imagePath = os.Getenv("IMAGE_PATH")
+	timePath  = os.Getenv("TIME_PATH")
 )
 
 func isValid() bool {
@@ -26,7 +26,8 @@ func isValid() bool {
 }
 
 func updateImage() error {
-	resp, err := http.Get("https://picsum.photos/1200")
+	photoUrl := os.Getenv("PICSUM_URL")
+	resp, err := http.Get(photoUrl)
 	if err != nil {
 		return err
 	}
@@ -59,10 +60,7 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	port := os.Getenv("SERVER_PORT")
 
 	http.HandleFunc("/files/image", serveImage)
 
