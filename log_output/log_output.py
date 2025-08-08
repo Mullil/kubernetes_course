@@ -7,6 +7,7 @@ import datetime
 import random
 import string
 import threading
+import os
 
 random_str = ''.join(random.choices(string.ascii_lowercase, k=10))
 current_time = datetime.datetime.now(datetime.timezone.utc)
@@ -15,8 +16,12 @@ app = FastAPI()
 
 @app.get("/", response_class=PlainTextResponse)
 def index():
+    message = os.getenv('MESSAGE')
+    with open('/etc/config/information.txt', 'r') as f:
+        content = f.read()
     pongs = requests.get("http://ping-pong-svc:2345/pings").text
-    data = f"{current_time}: {random_str} \nPing / Pongs: {pongs}"
+    data = f"""file content: {content}\nenv variable: {message}\n
+{current_time}: {random_str} \nPing / Pongs: {pongs}"""
     return PlainTextResponse(content=data)
 
 def update_loop():
