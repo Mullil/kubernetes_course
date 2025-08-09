@@ -14,6 +14,12 @@ Then run
 docker exec k3d-k3s-default-agent-0 mkdir -p /tmp/kube
 ```
 
+Create a namespace with
+
+```Bash
+kubectl create namespace exercises
+```
+
 Apply volumes with
 
 ```Bash
