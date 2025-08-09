@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:2.6
+          image: mullil/project:2.6.1
           volumeMounts:
             - name: image-cache
               mountPath: /app/files

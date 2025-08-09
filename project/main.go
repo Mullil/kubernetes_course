@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -27,24 +28,39 @@ func isValid() bool {
 
 func updateImage() error {
 	photoUrl := os.Getenv("PICSUM_URL")
+	if photoUrl == "" {
+		return fmt.Errorf("PICSUM_URL env var not set")
+	}
+
 	resp, err := http.Get(photoUrl)
 	if err != nil {
+		log.Printf("Failed to download image: %v", err)
 		return err
 	}
 	defer resp.Body.Close()
 
 	f, err := os.Create(imagePath)
 	if err != nil {
+		log.Printf("Failed to create image file: %v", err)
 		return err
 	}
 	defer f.Close()
+
 	_, err = io.Copy(f, resp.Body)
 	if err != nil {
+		log.Printf("Failed to write image file: %v", err)
 		return err
 	}
 
 	ts := time.Now().Format(time.RFC3339)
-	return os.WriteFile(timePath, []byte(ts), 0644)
+	err = os.WriteFile(timePath, []byte(ts), 0644)
+	if err != nil {
+		log.Printf("Failed to write timestamp file: %v", err)
+		return err
+	}
+
+	log.Printf("Image updated successfully at %s", ts)
+	return nil
 }
 
 func serveImage(w http.ResponseWriter, r *http.Request) {
