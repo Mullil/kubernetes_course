@@ -42,3 +42,5 @@
 - [2.4](https://github.com/Mullil/kubernetes_course/tree/2.4/project)
 
 - [2.5](https://github.com/Mullil/kubernetes_course/tree/2.5/log_output)
+
+- [2.6](https://github.com/Mullil/kubernetes_course/tree/2.6/project)
