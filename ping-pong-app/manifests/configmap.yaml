@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pingpong-configmap
+  namespace: exercises
+data:
+  DATABASE_URL: postgres://user:secret@postgres-svc:5432/mydatabase?sslmode=disable
