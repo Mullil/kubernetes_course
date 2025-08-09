@@ -46,3 +46,5 @@
 - [2.6](https://github.com/Mullil/kubernetes_course/tree/2.6/project)
 
 - [2.7](https://github.com/Mullil/kubernetes_course/tree/2.7/ping-pong-app)
+
+- [2.8](https://github.com/Mullil/kubernetes_course/tree/2.8/project)
