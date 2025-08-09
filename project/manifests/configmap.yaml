@@ -9,3 +9,4 @@ data:
   IMAGE_PATH: "/app/files/image.jpg"
   TIME_PATH: "/app/files/image.time"
   PICSUM_URL: "https://picsum.photos/1200"
+  DATABASE_URL: postgres://user:secret@postgres-svc:5432/mydatabase?sslmode=disable

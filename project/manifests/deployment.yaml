@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: mullil/todo-backend:2.6
+          image: mullil/todo-backend:2.8
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
