@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: create-todo-job
+  namespace: project
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: create-todo
+            image: curlimages/curl
+            imagePullPolicy: IfNotPresent
+            command:
+              - /bin/sh
+              - -c
+              - |
+                URL=$(curl -Ls -o /dev/null -w %{url_effective} https://en.wikipedia.org/wiki/Special:Random)
+                echo "Got URL: $URL"
+                echo "Posting JSON: {\"content\":\"Read $URL\"}"
+                curl -X POST http://todo-backend-svc.project.svc.cluster.local:3001/todos \
+                  -H "Content-Type: application/json" \
+                  -d "{\"content\":\"Read $URL\"}"
+
+          restartPolicy: OnFailure
