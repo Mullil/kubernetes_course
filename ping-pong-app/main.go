@@ -73,5 +73,10 @@ func main() {
 		fmt.Fprintf(w, "%d\n", count)
 	})
 
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "OK")
+	})
+
 	http.ListenAndServe(":"+port, nil)
 }
