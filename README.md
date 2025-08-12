@@ -54,3 +54,5 @@
 ### Chapter 4
 
 - [3.1](https://github.com/Mullil/kubernetes_course/tree/3.1/ping-pong-app)
+
+- [3.2](https://github.com/Mullil/kubernetes_course/tree/3.2/log_output)
