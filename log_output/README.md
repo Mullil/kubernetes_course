@@ -1,24 +1,13 @@
-Create a k3d cluster with
+Create a cluster with
+
 ```Bash
-k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+gcloud container clusters create dwk-cluster --zone=europe-north1-b --cluster-version=1.33 --disk-size=32 --num-nodes=3 --machine-type=e2-micro
 ```
 
 Create a namespace with
 
 ```Bash
 kubectl create namespace exercises
-```
-
-Then run 
-
-```Bash
-docker exec k3d-k3s-default-agent-0 mkdir -p /tmp/kube
-```
-
-And apply volumes with
-
-```Bash
-kubectl apply -f ../exercise-volumes/
 ```
 
 Deploy with 
@@ -31,4 +20,9 @@ kubectl apply -f ../ping-pong-app/manifests/
 kubectl apply -f manifests/
 ```
 
-Now the application can be accessed in http://localhost:8081/
+Then get the address of the app with
+
+```Bash
+kubectl get ing -n exercises
+```
+
