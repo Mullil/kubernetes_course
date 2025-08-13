@@ -19,7 +19,7 @@ def index():
     message = os.getenv('MESSAGE')
     with open('/etc/config/information.txt', 'r') as f:
         content = f.read()
-    pongs = requests.get("http://ping-pong-svc:2345/pings").text
+    pongs = requests.get("http://ping-pong-svc:80/pings").text
     data = f"""file content: {content}\nenv variable: {message}\n
 {current_time}: {random_str} \nPing / Pongs: {pongs}"""
     return PlainTextResponse(content=data)
