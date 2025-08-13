@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ping-pong-app
-          image: mullil/ping-pong-app:3.2
+          image: mullil/ping-pong-app:3.4
           envFrom:
             - configMapRef:
                 name: pingpong-configmap

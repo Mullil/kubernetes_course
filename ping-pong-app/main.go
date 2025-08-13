@@ -41,7 +41,7 @@ func main() {
 		log.Fatalf("Failed to insert initial count: %v", err)
 	}
 
-	http.HandleFunc("/pingpong", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		_, err := db.Exec(`UPDATE ping_count SET value = value + 1 WHERE id = 1`)
 		if err != nil {
 			http.Error(w, "DB update failed", http.StatusInternalServerError)
@@ -71,11 +71,6 @@ func main() {
 			return
 		}
 		fmt.Fprintf(w, "%d\n", count)
-	})
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "OK")
 	})
 
 	http.ListenAndServe(":"+port, nil)
