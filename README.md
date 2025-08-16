@@ -60,3 +60,5 @@
 - [3.3](https://github.com/Mullil/kubernetes_course/tree/3.3/log_output)
 
 - [3.4](https://github.com/Mullil/kubernetes_course/tree/3.4/log_output)
+
+- [3.5](https://github.com/Mullil/kubernetes_course/tree/3.5/project)
