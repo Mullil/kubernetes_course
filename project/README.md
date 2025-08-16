@@ -1,19 +1,7 @@
-Delete existing k3d cluster with
-
-```Bash
-k3d cluster delete
-```
-
 Create a k3d cluster with
 
 ```Bash
-k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
-```
-
-Then run
-
-```Bash
-docker exec k3d-k3s-default-agent-0 mkdir -p /tmp/kube
+gcloud container clusters create dwk-cluster --zone=europe-north1-b --cluster-version=1.33 --disk-size=32 --num-nodes=3 --machine-type=e2-micro
 ```
 
 Create the project namespace with
@@ -22,16 +10,14 @@ Create the project namespace with
 kubectl create namespace project
 ```
 
-Apply volumes with
-
-```Bash
-kubectl apply -f ../project-volumes/
-```
-
 Deploy with 
 
 ```Bash
-kubectl apply -f manifests/
+kubectl apply -k .
 ```
 
-Now the application can be accessed in http://localhost:8081/
+Then get the address of the app with
+
+```Bash
+kubectl get ing -n project project
+```
