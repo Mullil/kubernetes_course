@@ -95,6 +95,11 @@ func main() {
 		}
 	})
 
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "OK")
+	})
+
 	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Server failed: %v\n", err)
