@@ -5,6 +5,8 @@ metadata:
   namespace: project
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: project
@@ -15,7 +17,7 @@ spec:
     spec:
       containers:
         - name: project
-          image: mullil/project:2.6.1
+          image: PROJECT/project
           volumeMounts:
             - name: image-cache
               mountPath: /app/files
@@ -45,7 +47,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: mullil/todo-backend:3.5
+          image: PROJECT/todo-backend
           imagePullPolicy: Always
           envFrom:
             - configMapRef:

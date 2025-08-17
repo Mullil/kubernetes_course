@@ -1,0 +1,61 @@
+name: Release application
+
+on:
+  push:
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-b
+  REGISTRY: europe-north1-docker.pkg.dev
+  REPOSITORY: quickstart-docker-repo
+  BRANCH: ${{ github.ref_name }}
+
+jobs:
+  build-publish-deploy:
+    name: Build, Publish and Deploy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+      - name: 'Use gcloud CLI'
+        run: gcloud info
+      - name: 'Configure Docker'
+        run: gcloud --quiet auth configure-docker
+      - name: 'Get GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          location: '${{ env.GKE_ZONE }}'
+      - name: Build todo-backend image
+        run: |
+          IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-backend:$BRANCH-$GITHUB_SHA
+          echo "TODO_BACKEND_IMAGE=$IMAGE_TAG" >> $GITHUB_ENV
+          docker build -t $IMAGE_TAG ./todo-backend
+          docker push $IMAGE_TAG
+      - name: Build project image
+        run: |
+          IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/project:$BRANCH-$GITHUB_SHA
+          echo "PROJECT_IMAGE=$IMAGE_TAG" >> $GITHUB_ENV
+          docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v2.1.0
+      - name: Deploy
+        run: |-
+          kustomize edit set image PROJECT/todo-backend=$TODO_BACKEND_IMAGE
+          kustomize edit set image PROJECT/project=$PROJECT_IMAGE
+          kustomize build . | kubectl apply -f -
+          kubectl rollout status deployment todo-backend
+          kubectl rollout status deployment project
+          kubectl get services -o wide

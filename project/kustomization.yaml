@@ -2,6 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: project
 
+images:
+  - name: PROJECT/todo-backend
+    newName: europe-north1-docker.pkg.dev/dwk-gke-468805/quickstart-docker-repo/todo-backend
+    newTag: latest
+  - name: PROJECT/project
+    newName: europe-north1-docker.pkg.dev/dwk-gke-468805/quickstart-docker-repo/project
+    newTag: latest
+
 resources:
   - manifests/persistentvolumeclaim.yaml
   - manifests/configmap.yaml
