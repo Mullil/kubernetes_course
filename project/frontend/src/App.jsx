@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div>
-      The project App
+      <h2>The project App</h2>
       <p><img style={{ height: 300, width: 300 }} src='/files/image' alt='Random'/></p>
       <form onSubmit={ handleSubmit }>
         <div><input name="todo"></input></div>
