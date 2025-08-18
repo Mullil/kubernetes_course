@@ -53,6 +53,15 @@ jobs:
         uses: imranismail/setup-kustomize@v2.1.0
       - name: Deploy
         run: |-
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          if [ "$BRANCH" = "main" ]; then
+            NAMESPACE="project"
+          else
+            NAMESPACE="$BRANCH"
+          fi
+          kubectl create namespace "$NAMESPACE" || true
+          kubectl config set-context --current --namespace="$NAMESPACE"
+          kustomize edit set namespace "$NAMESPACE"
           kustomize edit set image PROJECT/todo-backend=$TODO_BACKEND_IMAGE
           kustomize edit set image PROJECT/project=$PROJECT_IMAGE
           kustomize build . | kubectl apply -f -
