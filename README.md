@@ -66,3 +66,5 @@
 - [3.6](https://github.com/Mullil/kubernetes_course/tree/3.6/project)
 
 - [3.7](https://github.com/Mullil/kubernetes_course/tree/3.7)
+
+- [3.8](https://github.com/Mullil/kubernetes_course/tree/3.8)
