@@ -12,16 +12,8 @@ spec:
           restartPolicy: Never
           containers:
           - name: pg-backup
-            image: postgres:16-alpine
-            command:
-              - /bin/bash
-              - -c
-              - |
-                set -e
-                DATE=$(date +%Y-%m-%d_%H-%M-%S)
-                FILE="backup-${DATE}.sql"
-                PGPASSWORD=$DB_PASSWORD pg_dump -h $DB_HOST -U $DB_USER $DB_NAME > $FILE
-                gsutil cp $FILE gs://$GCS_BUCKET/backups/
+            image: mullil/pg-backup:latest
             envFrom:
             - secretRef:
                 name: pg-backup-secret
+
