@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pg-backup
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: pg-backup
+            image: google/cloud-sdk:slim
+            command:
+              - /bin/bash
+              - -c
+              - |
+                apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+                DATE=$(date +%Y-%m-%d_%H-%M-%S)
+                FILE="/tmp/${DB_NAME}_${DATE}.sql.gz"
+                PGPASSWORD=$DB_PASSWORD pg_dump -h $DB_HOST -U $DB_USER $DB_NAME | gzip > $FILE
+                gsutil cp $FILE gs://$GCS_BUCKET/backups/
+            envFrom:
+            - secretRef:
+                name: pg-backup-secret
