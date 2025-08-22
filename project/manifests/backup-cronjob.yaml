@@ -9,11 +9,11 @@ spec:
     spec:
       template:
         spec:
-          restartPolicy: Never
+          serviceAccountName: pg-backup-ksa
+          restartPolicy: OnFailure
           containers:
           - name: pg-backup
             image: mullil/pg-backup:latest
             envFrom:
             - secretRef:
                 name: pg-backup-secret
-
