@@ -19,4 +19,3 @@ resources:
   - manifests/todo-backend-service.yaml
   - manifests/deployment.yaml
   - manifests/service.yaml
-  - manifests/backup-cronjob.yaml
