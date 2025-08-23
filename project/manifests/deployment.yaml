@@ -25,6 +25,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: project-configmap
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "150m"
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
       volumes:
         - name: image-cache
           persistentVolumeClaim:
@@ -52,3 +59,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: project-configmap
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "50m"
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
