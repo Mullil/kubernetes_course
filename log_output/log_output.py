@@ -1,6 +1,7 @@
 import time
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
+from fastapi import Response
 import uvicorn
 import requests
 import datetime
@@ -23,6 +24,16 @@ def index():
     data = f"""file content: {content}\nenv variable: {message}\n
 {current_time}: {random_str} \nPing / Pongs: {pongs}"""
     return PlainTextResponse(content=data)
+
+@app.get("/log-healthz")
+def healthz():
+    try:
+        r = requests.get("http://ping-pong-svc:80/pings")
+        if r.status_code == 200:
+            return Response(content="ok", status_code=200)
+        return Response(content="Pingpong app unhealthy", status_code=500)
+    except Exception as e:
+        return Response(content=f"Cannot fetch pings: {e}", status_code=500)
 
 def update_loop():
     global current_time

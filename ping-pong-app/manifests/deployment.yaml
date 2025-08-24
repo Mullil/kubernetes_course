@@ -15,7 +15,13 @@ spec:
     spec:
       containers:
         - name: ping-pong-app
-          image: mullil/ping-pong-app:3.4
+          image: mullil/ping-pong-app:4.1
           envFrom:
             - configMapRef:
                 name: pingpong-configmap
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+               path: /healthz
+               port: 3000

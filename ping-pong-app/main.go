@@ -73,5 +73,15 @@ func main() {
 		fmt.Fprintf(w, "%d\n", count)
 	})
 
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		err := db.Ping()
+		if err != nil {
+			http.Error(w, fmt.Sprintf("db is not ready: %v", err), http.StatusServiceUnavailable)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("ok"))
+	})
+
 	http.ListenAndServe(":"+port, nil)
 }
