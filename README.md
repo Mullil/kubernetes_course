@@ -75,3 +75,7 @@
 The advantages to DBaaS are that it is faster and easier to set up than a self-hosted database. It is also often cheaper to initialize than a self-hosted database, because a self-hosted database needs maintainers and possibly more hardware. DBaaS might not need a high initialization cost, as with a pay-as-you-go pricing model the consumer would just pay for the resources used without a large upfront cost. Also DBaaS is easier to scale and often backups are automated. With a self-hosted database the backups need to be manually automated, which is of course harder than having them automated by the DBaaS provider. In general DBaaS is easier to use and need less work to initialize, but a self-hosted database can offer more customization and control, while needing more work to initialize. 
 
 - [3.11](https://github.com/Mullil/kubernetes_course/tree/3.11/project)
+
+### Chapter 5
+
+- [4.1](https://github.com/Mullil/kubernetes_course/tree/4.1/log_output)
