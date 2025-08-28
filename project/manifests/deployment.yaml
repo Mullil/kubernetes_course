@@ -27,10 +27,10 @@ spec:
                 name: project-configmap
           resources:
             requests:
-              memory: "8Mi"
+              memory: "1Mi"
               cpu: "10m"
             limits:
-              memory: "16Mi"
+              memory: "8Mi"
               cpu: "50m"
       volumes:
         - name: image-cache
