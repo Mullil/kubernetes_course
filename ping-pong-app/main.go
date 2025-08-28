@@ -67,7 +67,7 @@ func main() {
 		var count int
 		err := db.QueryRow(`SELECT value FROM ping_count WHERE id = 1`).Scan(&count)
 		if err != nil {
-			http.Error(w, "DB read failed", http.StatusInternalServerError)
+			http.Error(w, "DB read failed!", http.StatusInternalServerError)
 			return
 		}
 		fmt.Fprintf(w, "%d\n", count)
