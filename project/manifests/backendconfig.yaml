@@ -9,3 +9,5 @@ spec:
     port: 3001
     type: HTTP
     requestPath: /healthz
+    healthyThreshold: 1
+    unhealthyThreshold: 3

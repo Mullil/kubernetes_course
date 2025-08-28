@@ -51,6 +51,8 @@ spec:
     metadata:
       labels:
         app: todo-backend
+      annotations:
+        cloud.google.com/backend-config: '{"default": "project-backendconfig"}'
     spec:
       containers:
         - name: todo-backend
