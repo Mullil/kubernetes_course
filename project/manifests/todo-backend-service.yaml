@@ -6,7 +6,7 @@ metadata:
   annotations:
     cloud.google.com/backend-config: '{"default": "project-backendconfig"}'
 spec:
-  type: NodePort
+  type: clusterIP
   selector:
     app: todo-backend
   ports:
