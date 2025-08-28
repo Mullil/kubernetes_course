@@ -76,7 +76,7 @@ func main() {
 		content TEXT NOT NULL
 	)`)
 	if err != nil {
-		log.Fatalf("Failed to create table: %v", err)
+		log.Printf("Failed to create table: %v", err)
 	}
 
 	http.HandleFunc("/todos", func(w http.ResponseWriter, r *http.Request) {
