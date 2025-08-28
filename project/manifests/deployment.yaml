@@ -67,7 +67,7 @@ spec:
                port: 3001
           resources:
             requests:
-              memory: "8Mi"
+              memory: "1Mi"
               cpu: "10m"
             limits:
               memory: "16Mi"
