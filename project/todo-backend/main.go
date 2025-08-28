@@ -100,6 +100,16 @@ func main() {
 		fmt.Fprint(w, "OK")
 	})
 
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		err := db.Ping()
+		if err != nil {
+			http.Error(w, fmt.Sprintf("db is not ready: %v", err), http.StatusServiceUnavailable)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("ok"))
+	})
+
 	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Server failed: %v\n", err)
