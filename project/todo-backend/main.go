@@ -68,12 +68,7 @@ func main() {
 
 	db, err := sql.Open("postgres", dbUrl)
 	if err != nil {
-		log.Fatalf("Failed to open DB: %v", err)
-	}
-	defer db.Close()
-
-	if err := db.Ping(); err != nil {
-		log.Fatalf("Failed to ping DB: %v", err)
+		log.Printf("Failed to open DB: %v", err)
 	}
 
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS todos (
