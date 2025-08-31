@@ -26,7 +26,7 @@ type Todo struct {
 }
 
 func getTodos(db *sql.DB, w http.ResponseWriter) {
-	rows, err := db.Query("SELECT id, content FROM todos")
+	rows, err := db.Query("SELECT id, content, done FROM todos")
 	if err != nil {
 		http.Error(w, "Failed to query todos", http.StatusInternalServerError)
 		return
