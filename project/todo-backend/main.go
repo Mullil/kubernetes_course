@@ -14,11 +14,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type newTodo struct {
-	Id      int    `json:"id"`
-	Content string `json:"content"`
-}
-
 type Todo struct {
 	Id      int    `json:"id"`
 	Content string `json:"content"`
@@ -48,7 +43,7 @@ func getTodos(db *sql.DB, w http.ResponseWriter) {
 }
 
 func createTodo(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	var t newTodo
+	var t Todo
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -59,7 +54,7 @@ func createTodo(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = db.QueryRow("INSERT INTO todos (content) VALUES ($1) RETURNING id", t.Content).Scan(&t.Id)
+	err = db.QueryRow("INSERT INTO todos (content) VALUES ($1) RETURNING id, content, done", t.Content).Scan(&t.Id, &t.Content, &t.Done)
 	if err != nil {
 		http.Error(w, "Failed to insert todo", http.StatusInternalServerError)
 		return
