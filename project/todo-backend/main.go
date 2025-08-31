@@ -36,7 +36,7 @@ func getTodos(db *sql.DB, w http.ResponseWriter) {
 	todos := []Todo{}
 	for rows.Next() {
 		var t Todo
-		if err := rows.Scan(&t.Id, &t.Content); err != nil {
+		if err := rows.Scan(&t.Id, &t.Content, &t.Done); err != nil {
 			http.Error(w, "Failed to scan todo", http.StatusInternalServerError)
 			return
 		}
