@@ -8,13 +8,21 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 
 	_ "github.com/lib/pq"
 )
 
+type newTodo struct {
+	Id      int    `json:"id"`
+	Content string `json:"content"`
+}
+
 type Todo struct {
 	Id      int    `json:"id"`
 	Content string `json:"content"`
+	Done    bool   `json:"done"`
 }
 
 func getTodos(db *sql.DB, w http.ResponseWriter) {
@@ -40,7 +48,7 @@ func getTodos(db *sql.DB, w http.ResponseWriter) {
 }
 
 func createTodo(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	var t Todo
+	var t newTodo
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -61,6 +69,20 @@ func createTodo(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(t)
 }
 
+func markDone(db *sql.DB, w http.ResponseWriter, id int) {
+	var t Todo
+	err := db.QueryRow(
+		"UPDATE todos SET done = TRUE WHERE id = $1 RETURNING id, content, done", id).Scan(
+		&t.Id, &t.Content, &t.Done)
+	if err != nil {
+		http.Error(w, "Failed to update todo", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(t)
+}
+
 func main() {
 	port := os.Getenv("TODO_BACKEND_PORT")
 	fmt.Printf("Starting todo-backend on port %s\n", port)
@@ -73,7 +95,8 @@ func main() {
 
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS todos (
 		id SERIAL PRIMARY KEY,
-		content TEXT NOT NULL
+		content TEXT NOT NULL,
+		done BOOLEAN DEFAULT FALSE
 	)`)
 	if err != nil {
 		log.Printf("Failed to create table: %v", err)
@@ -85,6 +108,21 @@ func main() {
 			getTodos(db, w)
 		case http.MethodPost:
 			createTodo(db, w, r)
+		default:
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
+
+	http.HandleFunc("/todos/", func(w http.ResponseWriter, r *http.Request) {
+		idStr := strings.TrimPrefix(r.URL.Path, "/todos/")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			http.Error(w, "Invalid ID", http.StatusBadRequest)
+			return
+		}
+		switch r.Method {
+		case http.MethodPut:
+			markDone(db, w, id)
 		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}

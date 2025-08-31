@@ -13,13 +13,33 @@ function App() {
     getTodos()
   }, [])
 
+  const handleDone = async (id) => {
+    try {
+      const response = await axios.put(`${baseUrl}/${id}`)
+      setTodos(todos.map(t => t.id !== id ? t : response.data))
+    } catch (error) {
+        console.error("Failed to mark todo as done", error)
+    }
+  }
+
   const todoList = () => {
     return !todos ? null : (
-      <ul>
-      {todos.map((todo) =>
-        <li key={todo.id}>{todo.content}</li>
-      )}
-      </ul>
+      <div>
+        <h3>Todo</h3>
+        <ul>
+        {todos.filter(t => t.done === false).map((todo) =>
+          <li key={todo.id}>
+            {todo.content} <button onClick={() => handleDone(todo.id)}>Mark as done</button>
+          </li>
+        )}
+        </ul>
+        <h3>Done</h3>
+        <ul>
+        {todos.filter(t => t.done === true).map((todo) =>
+          <li key={todo.id}>{todo.content}</li>
+        )}
+        </ul>
+      </div>
     )
   }
 
