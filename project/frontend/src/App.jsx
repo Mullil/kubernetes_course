@@ -49,7 +49,7 @@ function App() {
     event.target.todo.value = ''
     if (todo.length <= 140) {
       const response = await axios.post(baseUrl, { content: todo })
-      setTodos(todos.concat(response.data))
+      setTodos(todos => todos.concat(response.data))
     }
   }
 
