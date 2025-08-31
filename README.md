@@ -81,3 +81,5 @@ The advantages to DBaaS are that it is faster and easier to set up than a self-h
 - [4.1](https://github.com/Mullil/kubernetes_course/tree/4.1/log_output)
 
 - [4.2](https://github.com/Mullil/kubernetes_course/tree/4.2/project)
+
+- [4.5](https://github.com/Mullil/kubernetes_course/tree/4.5/project)
